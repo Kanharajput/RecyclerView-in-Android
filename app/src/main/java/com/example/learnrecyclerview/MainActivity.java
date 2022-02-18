@@ -43,12 +43,15 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
 
         binding.fab.setOnClickListener(new View.OnClickListener() {
-            @Override
+            @Override  // adding new word to the lsit
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                int wordListSize = mWordList.size() + 1;
+                mWordList.add("+"+"word"+wordListSize);    // adding a new string element
+                mRecyclerView.getAdapter().notifyItemInserted(wordListSize);  // notify dataset changed
+                mRecyclerView.smoothScrollToPosition(wordListSize);   // scroll screen where we added new data
             }
         });
+
         // always do this operations after inflating the main layout
         createDataSet();   // Let's create a data set by calling this method
         mRecyclerView  = findViewById(R.id.recycler_view);
