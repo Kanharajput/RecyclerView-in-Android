@@ -22,7 +22,7 @@ import android.view.MenuItem;
 
 import java.util.LinkedList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements WordListAdapter.OnItemClicked {
     private RecyclerView mRecyclerView;
     private WordListAdapter mWordListAdapter;
     private AppBarConfiguration appBarConfiguration;
@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         createDataSet();   // Let's create a data set by calling this method
         mRecyclerView  = findViewById(R.id.recycler_view);
         // lets create an adapter
-        mWordListAdapter = new WordListAdapter(this,mWordList);
+        mWordListAdapter = new WordListAdapter(this,mWordList,this);
         mRecyclerView.setAdapter(mWordListAdapter);     // connect the adapter to the view
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));    // pass a layout manager
     }
@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
         if (id == R.id.action_reset) {
             mWordList.clear();
             createDataSet();   // Let's create a data set by calling this method
-            mWordListAdapter = new WordListAdapter(this,mWordList);
+            mWordListAdapter = new WordListAdapter(this,mWordList,this);
             mRecyclerView.setAdapter(mWordListAdapter);     // connect the adapter to the view
             mRecyclerView.setLayoutManager(new LinearLayoutManager(this));    // pass a layout manager
             return true;
@@ -100,5 +100,16 @@ public class MainActivity extends AppCompatActivity {
         for(int i=1; i<20; i++) {
             mWordList.add("Word " + i);
         }
+    }
+
+    @Override  // do what you wanna do when clicked to an item
+    public void onItemClick(int position) {
+        // use this position to get the affected item in the wordlist
+        String element = mWordList.get(position);
+        // change the data in the wordList
+        mWordList.set(position,"cicked!"+element);
+        // notify the adapter that the data has been chagned
+        // so recyclerVeiw can update it
+        mWordListAdapter.notifyDataSetChanged();
     }
 }
