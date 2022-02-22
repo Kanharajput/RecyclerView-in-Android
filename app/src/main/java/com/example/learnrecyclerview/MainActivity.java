@@ -75,8 +75,13 @@ public class MainActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        //reseting the data back to initial state
+        if (id == R.id.action_reset) {
+            mWordList.clear();
+            createDataSet();   // Let's create a data set by calling this method
+            mWordListAdapter = new WordListAdapter(this,mWordList);
+            mRecyclerView.setAdapter(mWordListAdapter);     // connect the adapter to the view
+            mRecyclerView.setLayoutManager(new LinearLayoutManager(this));    // pass a layout manager
             return true;
         }
 

@@ -19,7 +19,7 @@ public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.WordVi
     // get the data from mainActivity and the layout inflator
     public WordListAdapter(Context context, LinkedList<String> wordList) {
         mInflater = LayoutInflater.from(context);
-        mwordList = wordList;
+        mwordList = wordList;      // not created a new linkedlist mean both wordList and mwordList point to same object
     }
 
     @NonNull
